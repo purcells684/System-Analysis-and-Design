@@ -1,95 +1,20 @@
-# System-Analysis-and-Design
-**DriverPass** is a secure, cloud-native platform designed to streamline and modernize the driving lesson experience. It replaces traditional booking complexities with an intuitive self-service portal, real-time automated scheduling, and bank-level financial transaction processing. 
+System Analysis & Design
+Briefly summarize the DriverPass project. Who was the client? What type of system did they want you to design?
 
-## 🚀 Key Features
+The DriverPass project was commissioned by the client, Stan U. Purcell, to modernize the driving lesson experience. The objective was to design a cloud-native, automated driving school scheduling and management system. The platform automates student registrations, coordinates real-time calendar slot bookings, processes secure card payments, and generates business growth analytics reports.
 
-### Core System Services (Functional)
-* **Self-Service Registration:** Students can easily create and manage profiles online.
-* **Real-Time Calendar Booking:** Live scheduling allows students to browse open slots and confirm lesson bookings instantly.
-* **Automated Payments:** Secure processing of transactions directly through integrated, certified payment gateways.
-* **Business Performance Reports:** Dedicated administrative tools generate metrics on booking frequencies and revenue growth.
+What did you do particularly well?
 
-### Technical Platform Standards (Nonfunctional)
-* **High Availability Architecture:** Powered by multi-core cloud server clusters paired with automated traffic load management.
-* **Secure Enterprise Storage:** High-speed data isolation environments protect operational records and customer data.
-* **Containerized Deployment:** Application modules run within secure container spaces to effectively isolate vulnerabilities.
+The design excelled at establishing clear, rigid role boundaries and data workflows for each actor type. By cleanly translating structural system limitations (like requiring constant internet access and strict relational metrics) into functional platform designs, the architecture guarantees data integrity and bank-level isolation across different layers. The accompanying sequence and class models accurately mirror this clean division of security boundaries.
 
----
+If you could choose one part of your work on these documents to revise, what would you pick? How would you improve it?
 
-## 🏗️ Architecture & System Workflow
+I would choose to revise the UML Activity Diagrams. Currently, the process lifecycles are modeled as simple, linear end-to-end chains without any conditional branching or error-handling paths. To improve them, I would add decision diamonds and alternative paths to account for real-world scenarios—such as a student's card being declined by the payment gateway or an instructor's chosen slot conflicting with an existing booking.
 
-### Use Case Boundaries
-The platform separates system operational privileges into three explicit user roles:
-* **Students:** Handle account registration, lesson booking, and payment processing.
-* **Instructors:** Publish real-time teaching availability and complete scheduled sessions.
-* **Administrators:** Oversee overall system health and run analytics reports.
-|   Actor    |          | Actions / Use Cases                        |
-+------------+          +--------------------------------------------+
-| Student    |  ---->   | Register Account | Book Lesson | Pay       |
-| Instructor |  ---->   | Add Availability | Complete Lesson         |
-| Admin      |  ---->   | Manage System    | Run Reports             |
-+------------+          +--------------------------------------------+
+How did you interpret the user’s needs and implement them into your system design? Why is it so important to consider the user’s needs when designing?
 
-### Process Lifecycles
+The user's needs were explicitly broken down into structural boundaries matching three precise personas: Students, Instructors, and Administrators. For example, the student's need for instant confirmation was addressed through a real-time validation database query loop in the sequence logic. Considering user needs is critical because a system with flawless technical architecture is ultimately a failure if it features poor usability, violates user workflows, or lacks the intuitive accessibility required for everyday operations.
 
-#### 1. Scheduling Workflow
-[ Start ] -> [ Browse Slots ] -> [ Validate Availability ] -> [ Confirm Booking ] -> [ End ]
+How do you approach designing software? What techniques or strategies would you use in the future to analyze and design a system?
 
-#### 2. Lesson Payment Processing
-[ Start ] -> [ Collect Card Info ] -> [ Gateway Approval ] -> [ Generate Receipt ] -> [ End ]
-
-#### 3. Real-Time Slot Selection Layer Interaction
-Student Web UI              Booking Service               Database
-|                             |                          |
-|--- Select Slot ------------>|                          |
-|                             |--- Validate Slot ------->|
-|                             |                          |--- Query Status (Self)
-|                             |<-- Return Status --------|
-|<-- Display Ready -----------|                          |
-|                             |                          |
-|--- Click Confirm ---------->|                          |
-|                             |--- Commit Booking ------>|
-|                             |                          |--- Save Record (Self)
-|                             |<-- Confirm Save ---------|
-|<-- Show Success ------------|                          |
-
----
-
-## 📊 Data Models (UML Classes)
-
-The core relational data schema is highly structured and built around distinct operational boundaries:
-
-* **Student**
-  * `studentID` (Int) — Primary Key
-  * `name` (String)
-  * `email` (String)
-  * `phone` (String)
-* **Instructor**
-  * `instructorID` (Int) — Primary Key
-  * `name` (String)
-  * `certificationNum` (String)
-* **Lesson**
-  * `lessonID` (Int) — Primary Key
-  * `dateTime` (DateTime)
-  * `status` (String)
-* **Payment**
-  * `paymentID` (Int) — Primary Key
-  * `amount` (Decimal)
-  * `transactionStatus` (String)
-
----
-
-## 🛠️ Tech Stack & Requirements
-
-### Infrastructure & Environment
-* **OS Target:** Ubuntu Server Linux OS.
-* **Hardware Profile:** Multi-core cloud server nodes configured with **8GB RAM and 4 vCPUs** placed behind a network load balancer.
-* **Database Engine:** PostgreSQL (Structured, relational storage metrics ensuring transactional integrity).
-
-### Tools & Engineering Practices
-* **Containerization:** Docker containers are utilized to tightly couple and mirror identical local development and production environments.
-* **Automation Automation (CI/CD):** Integrated with GitHub Actions pipelines for automated code integration and distribution safety.
-
-## ⚠️ System Limitations
-* **Continuous Online Status:** The platform relies strictly on stable, live network access. Offline capabilities are not supported due to the necessity of real-time multi-user availability checks and secure transaction clearing.
-* **Rigid Data Structure:** Optimization profiles are mapped entirely to uniform, relational metadata fields (IDs, times, specific strings) rather than unstructured object or file storage parsing mechanisms.
+My design approach begins by gathering raw business logic, separating functional features from nonfunctional baseline limitations, and mapping out user roles. In future projects, I would integrate Agile user story mapping alongside UML diagrams to capture smaller, iterative user journeys. Additionally, utilizing robust prototyping tools and threat-modeling frameworks early in the wireframing phase ensures security boundaries are verified long before structural development begins.
